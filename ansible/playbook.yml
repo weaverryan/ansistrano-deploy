@@ -19,6 +19,7 @@
         state: latest
 
     - name: Create project directory
+      become: true
       file:
         path: '{{ project_deploy_dir }}'
         state: directory
