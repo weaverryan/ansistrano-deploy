@@ -1,8 +1,21 @@
 ---
 - hosts: aws
 
+  vars_files:
+    - ./vars/vars.yml
+
+  vars_prompt:
+    - name: git_branch
+      prompt: 'Enter a branch to deploy'
+      default: master
+      private: no
+
   vars:
-    ansistrano_deploy_to: "/var/www/project"
+    ansistrano_deploy_to: "{{ project_deploy_dir }}"
+    ansistrano_deploy_via: git
+    ansistrano_git_repo: git@github.com:weaverryan/ansistrano-deploy.git
+    ansistrano_git_branch: "{{ git_branch }}"
+    ansistrano_git_identity_key_path: "{{ playbook_dir }}/id_rsa"
 
   roles:
     - carlosbuenosvinos.ansistrano-deploy
