@@ -99,29 +99,21 @@
       stat:
         path: /usr/local/bin/composer
       register: composer_stat
-      tags:
-        - deploy
 
     - name: Download Composer
       script: scripts/install_composer.sh
       when: not composer_stat.stat.exists
-      tags:
-        - deploy
 
     - name: Move Composer globally
       become: true
       command: mv composer.phar /usr/local/bin/composer
       when: not composer_stat.stat.exists
-      tags:
-        - deploy
 
     - name: Set permissions on Composer
       become: true
       file:
         path: /usr/local/bin/composer
         mode: "a+x"
-      tags:
-        - deploy
 
     - name: Make sure Composer is at its latest version
       composer:
@@ -129,8 +121,6 @@
         command: self-update
       register: composer_self_update
       changed_when: "not composer_self_update.stdout|search('You are already using composer version')"
-      tags:
-        - deploy
 
     # Node
     - name: Register NodeJS distribution
