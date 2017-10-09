@@ -15,8 +15,28 @@
   vars:
     release_console_path: "{{ ansistrano_release_path.stdout }}/bin/console"
     release_var_path: "{{ ansistrano_release_path.stdout }}/var"
+    release_logs_path: "{{ ansistrano_shared_path }}/var/logs"
 
     ansistrano_deploy_to: "{{ project_deploy_dir }}"
+
+    # Arrays of directories and files to be shared.
+    # The following arrays of directories and files will be symlinked to the current release directory after the 'update-code' step and its callbacks
+    # Notes:
+    # * Paths are relative to the /shared directory (no starting /)
+    # * If your items are in a subdirectory, write the entire path to each shared directory
+    #
+    # Example:
+    # ansistrano_shared_paths:
+    #   - path/to/first-dir
+    #   - path/next-dir
+    # ansistrano_shared_files:
+    #   - my-file.txt
+    #   - path/to/file.txt
+    ansistrano_shared_paths:
+      - var/logs
+      - node_modules
+    ansistrano_keep_releases: 3 # Releases to keep after a new deployment. See "Pruning old releases".
+
     ansistrano_deploy_via: git
     ansistrano_git_repo: git@github.com:weaverryan/ansistrano-deploy.git
     ansistrano_git_branch: "{{ git_branch }}"

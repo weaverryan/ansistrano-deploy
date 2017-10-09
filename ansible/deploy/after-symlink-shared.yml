@@ -25,9 +25,10 @@
 - name: Warm up the cache
   command: "{{ release_console_path }} cache:warmup --env=prod"
 
-- name: Setup directory permissions for var
+- name: Setup directory permissions for var/logs
+  become: true
   file:
-    path: "{{ release_var_path }}"
+    path: "{{ release_logs_path }}"
     state: directory
     mode: 0777
     recurse: true
