@@ -31,7 +31,7 @@ class Video
      *
      * @ORM\Column(type="string", length=255)
      */
-    private $image;
+    private $poster;
 
     /**
      * @var array
@@ -67,17 +67,17 @@ class Video
     /**
      * @return string
      */
-    public function getImage()
+    public function getPoster()
     {
-        return $this->image;
+        return $this->poster;
     }
 
     /**
-     * @param string $image
+     * @param string $poster
      */
-    public function setImage($image)
+    public function setPoster($poster)
     {
-        $this->image = $image;
+        $this->poster = $poster;
     }
 
     /**
