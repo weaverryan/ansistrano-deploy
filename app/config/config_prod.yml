@@ -7,6 +7,10 @@ doctrine:
 #        result_cache_driver: apc
         query_cache_driver: apcu
 
+framework:
+    cache:
+        app: cache.adapter.redis
+
 monolog:
     handlers:
         main:
