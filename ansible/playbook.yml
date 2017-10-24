@@ -2,6 +2,8 @@
 - hosts: webserver
 
   vars_files:
+    - ./vars/provision_vault.yml
+    - ./vars/provision_vars.yml
     - ./vars/vars.yml
 
   pre_tasks:
@@ -122,6 +124,14 @@
         command: self-update
       register: composer_self_update
       changed_when: "not composer_self_update.stdout|search('You are already using composer version')"
+
+    - name: Set GitHub OAuth token for Composer
+      composer:
+        command: config
+        arguments: '-g github-oauth.github.com "{{ github_oauth_token }}"'
+        working_dir: "/home/{{ ansible_user }}"
+      tags:
+        - github_oauth
 
     # Node
     - name: Register NodeJS distribution

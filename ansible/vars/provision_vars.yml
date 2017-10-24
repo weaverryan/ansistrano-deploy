@@ -1,0 +1,2 @@
+---
+github_oauth_token: "{{ vault_github_oauth_token }}"
