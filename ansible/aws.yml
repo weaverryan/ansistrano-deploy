@@ -14,7 +14,7 @@
   tasks:
     - name: Create an instance
       ec2:
-        instance_type: t1.micro
+        instance_type: m1.small
         image: ami-a15e0db6
         wait: yes
         group: web_access
