@@ -58,6 +58,8 @@ jobs:
     working_directory: ~/mootube
     docker:
       - image: ansible/ansible:ubuntu1604
+        environment:
+          ANSIBLE_HOST_KEY_CHECKING: no
     steps:
       # Installation
       - run:
@@ -74,7 +76,9 @@ jobs:
           paths:
             - '/root/.ansible/roles'
 
-      # @TODO Deploy to AWS here...
+      - run: echo $ANSIBLE_VAULT_PASS > ./ansible/.vault-pass.txt
+      - run: ansible-playbook ansible/deploy.yml -i ansible/hosts.ini -e "git_branch=master" --vault-password-file=./ansible/.vault-pass.txt
+      - run: rm ./ansible/.vault-pass.txt
 
 workflows:
   version: 2
